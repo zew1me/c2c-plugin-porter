@@ -24,7 +24,7 @@ Summarize:
 EOF
 
 echo "Running deterministic smoke checks first..."
-uv run c2c-porter scan "$FIXTURE" >"$TMP_DIR/scan.json"
+./scripts/run_porter.sh scan "$FIXTURE" >"$TMP_DIR/scan.json"
 
 echo "Attempting headless Codex smoke eval..."
 set +e

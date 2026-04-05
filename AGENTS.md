@@ -19,6 +19,7 @@ This repo contains only the `c2c-plugin-porter` Codex plugin and its determinist
 - `.codex-plugin/plugin.json`: plugin manifest
 - `skills/`: Codex plugin skills
 - `src/c2c_porter/cli.py`: packaged CLI entrypoint
+- `scripts/run_porter.sh`: shipped launcher that resolves the plugin root and runs the packaged CLI
 - `src/c2c_porter/`: Python conversion engine
 - `tests/fixtures/`: Claude plugin fixtures
 - `evals/`: local headless Codex smoke-eval materials

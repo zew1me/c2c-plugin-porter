@@ -9,9 +9,9 @@ This skill ports a Claude plugin into a Codex plugin with explicit caveats for u
 
 ## Workflow
 
-1. Run `uv run c2c-porter scan <source-plugin>`.
+1. Run `./scripts/run_porter.sh scan <source-plugin>`.
 2. Review the portability summary and named-reference inventory.
-3. If the plugin is worth porting, run `uv run c2c-porter convert <source-plugin> <output-dir>`.
+3. If the plugin is worth porting, run `./scripts/run_porter.sh convert <source-plugin> <output-dir>`.
 4. Inspect the generated `PORTING_REPORT.md` and expand any remaining Claude-only references into explicit behavior.
 5. If the source relies on Claude subagents or Agent Teams, flatten that logic into sequential Codex skill steps unless the target environment clearly supports delegation.
 
