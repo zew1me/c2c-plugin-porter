@@ -74,11 +74,3 @@ The eval script is intentionally best-effort. It verifies that:
 - a headless Codex run can be pointed at the local plugin repo and sample materials
 
 If your local Codex installation requires login or different plugin loading behavior, the script will explain the exact command it attempted.
-
-## GitHub repo creation
-
-This repo is meant to live at:
-
-- `https://github.com/zew1me/c2c-plugin-porter`
-
-If `gh auth status` shows an invalid token locally, the code can still be prepared here first and the repo can be created once GitHub auth is refreshed.
