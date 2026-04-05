@@ -24,10 +24,10 @@ jobs:
         uses: astral-sh/setup-uv@v5
 
       - name: Sync dev dependencies
-        run: uv sync --dev
+        run: uv sync --dev --project plugins/c2c-plugin-porter
 
       - name: Run shared checks
-        run: ./scripts/check.sh
+        run: ./plugins/c2c-plugin-porter/scripts/check.sh
 
   codex-smoke-eval:
     name: codex-smoke-eval
@@ -52,7 +52,7 @@ jobs:
           node-version: "20"
 
       - name: Sync dev dependencies
-        run: uv sync --dev
+        run: uv sync --dev --project plugins/c2c-plugin-porter
 
       - name: Install Codex CLI
         run: npm install -g @openai/codex@latest
@@ -61,4 +61,4 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           C2C_EVAL_TIMEOUT_SECONDS: "45"
-        run: ./scripts/run_local_eval.sh
+        run: ./plugins/c2c-plugin-porter/scripts/run_local_eval.sh

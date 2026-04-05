@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-./scripts/check.sh
+./plugins/c2c-plugin-porter/scripts/check.sh

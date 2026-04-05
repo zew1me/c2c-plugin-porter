@@ -1,0 +1,20 @@
+{
+  "name": "zew1me-local-marketplace",
+  "interface": {
+    "displayName": "zew1me Local Marketplace"
+  },
+  "plugins": [
+    {
+      "name": "c2c-plugin-porter",
+      "source": {
+        "source": "local",
+        "path": "./plugins/c2c-plugin-porter"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

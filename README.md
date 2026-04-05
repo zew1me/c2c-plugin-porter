@@ -1,99 +1,55 @@
-# c2c-plugin-porter
+# c2c-plugin-porter Marketplace
 
-`c2c-plugin-porter` is a Codex plugin that creates **Codex plugins from Claude plugins**.
+This repo is now a **Codex marketplace-style repo** whose only shipped plugin is `c2c-plugin-porter`.
 
-It is intentionally narrow:
+The plugin itself lives at [plugins/c2c-plugin-porter](/Users/nigelstuke/Documents/repos/zew1me/c2c-plugin-porter/plugins/c2c-plugin-porter), and the marketplace registry entry that points Codex at it lives at [.agents/plugins/marketplace.json](/Users/nigelstuke/Documents/repos/zew1me/c2c-plugin-porter/.agents/plugins/marketplace.json).
 
-- scan a Claude plugin
-- decide whether it is worth porting
-- rewrite Claude-specific runtime references into explicit behavior
-- generate a Codex plugin scaffold plus caveats and reports
-
-The repo is only the utility and the Codex plugin itself. It is not a marketplace repo.
-
-## What it handles
-
-- direct skill ports from `skills/**/SKILL.md`
-- metadata and plugin manifest conversion
-- command-to-skill rewrite guidance
-- flattening of agent/subagent-heavy workflows into sequential Codex workflows
-- caveats for loosened tool restrictions when no exact Codex mapping exists
-
-## What it does not pretend to support
-
-- native Claude Agent Teams parity
-- direct execution of Claude-only runtime primitives
-- perfect one-to-one translation of Claude commands or agent orchestration
-
-## Project layout
+## Layout
 
 ```text
-.codex-plugin/plugin.json   # Codex plugin manifest
-skills/                     # Agent-facing skills for using the porter
-scripts/port_to_codex.py    # CLI entrypoint
-src/c2c_porter/            # Deterministic porter logic
-tests/                     # pytest suite
-evals/                     # headless Codex smoke-eval inputs
-.githooks/                 # pre-commit and pre-push hooks
+.agents/plugins/marketplace.json     # Marketplace registry for Codex
+plugins/c2c-plugin-porter/           # The only plugin in this repo
+.githooks/                           # Shared repo hooks
+.github/workflows/                   # PR automation
 ```
 
-## Quick start
+Inside the plugin:
+
+```text
+plugins/c2c-plugin-porter/
+├── .codex-plugin/plugin.json
+├── skills/
+├── scripts/
+├── src/c2c_porter/
+├── tests/
+├── evals/
+└── pyproject.toml
+```
+
+## Local development
 
 ```bash
-uv sync --dev
-./scripts/install_git_hooks.sh
-uv run pytest
-uv run ruff check .
-uv run ty check src tests
+uv sync --dev --project plugins/c2c-plugin-porter
+./plugins/c2c-plugin-porter/scripts/install_git_hooks.sh
+./plugins/c2c-plugin-porter/scripts/check.sh
 ```
 
-The plugin ships a repo-relative launcher so Codex does not need to discover a globally installed `c2c-porter`
-binary. The launcher resolves the plugin root and runs the packaged CLI with `uv run --project <plugin-root>`.
-
-Scan a Claude plugin:
+Useful commands:
 
 ```bash
-./scripts/run_porter.sh scan /path/to/source-plugin
+./plugins/c2c-plugin-porter/scripts/run_porter.sh scan /path/to/source-plugin
+./plugins/c2c-plugin-porter/scripts/run_porter.sh convert /path/to/source-plugin ./generated
+./plugins/c2c-plugin-porter/scripts/run_local_eval.sh
 ```
 
-Convert a Claude plugin:
+## Why the repo is a marketplace
 
-```bash
-./scripts/run_porter.sh convert /path/to/source-plugin ./generated
-```
+Local Codex plugin installs appear to expect a marketplace-style layout with:
 
-## Why this is plugin-shippable
+- `.agents/plugins/marketplace.json`
+- `plugins/<plugin-name>/.codex-plugin/plugin.json`
 
-The Python package lives in `src/c2c_porter`, but it is shipped together with the plugin repo.
-The plugin skills call the shipped launcher in `scripts/run_porter.sh`, not a bare ambient command.
-That launcher always runs:
+This repo now matches that shape directly so it can act as both:
 
-```bash
-uv run --project <plugin-root> c2c-porter ...
-```
-
-So the package is resolved from the plugin itself, even if Codex invokes it from another working directory.
-
-## Local Codex evals
-
-Smoke evals are scriptable through `codex exec`:
-
-```bash
-./scripts/run_local_eval.sh
-```
-
-The eval script is intentionally best-effort. It verifies that:
-
-- `codex exec` is available locally
-- the sample Claude plugin fixture can be scanned
-- a headless Codex run can be pointed at the local plugin repo and sample materials
-
-If your local Codex installation requires login or different plugin loading behavior, the script will explain the exact command it attempted.
-
-## GitHub repo creation
-
-This repo is meant to live at:
-
-- `https://github.com/zew1me/c2c-plugin-porter`
-
-If `gh auth status` shows an invalid token locally, the code can still be prepared here first and the repo can be created once GitHub auth is refreshed.
+- the source repo for the utility
+- the installable local marketplace wrapper for Codex

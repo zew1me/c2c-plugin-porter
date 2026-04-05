@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+MARKETPLACE_ROOT="$(cd "$ROOT/../.." && pwd)"
 FIXTURE="$ROOT/tests/fixtures/sample-claude-plugin"
 TMP_DIR="$ROOT/evals/tmp"
 PROMPT_FILE="$ROOT/evals/prompts/smoke-eval.txt"
@@ -24,11 +25,11 @@ Summarize:
 EOF
 
 echo "Running deterministic smoke checks first..."
-./scripts/run_porter.sh scan "$FIXTURE" >"$TMP_DIR/scan.json"
+"$ROOT/scripts/run_porter.sh" scan "$FIXTURE" >"$TMP_DIR/scan.json"
 
 echo "Attempting headless Codex smoke eval..."
 set +e
-codex exec --skip-git-repo-check -C "$ROOT" "$(cat "$PROMPT_FILE")" \
+codex exec --skip-git-repo-check -C "$MARKETPLACE_ROOT" "$(cat "$PROMPT_FILE")" \
   -o "$TMP_DIR/codex-last-message.txt" \
   >"$TMP_DIR/codex-stdout.log" \
   2>"$TMP_DIR/codex-stderr.log" &

@@ -1,5 +1,5 @@
 Use the local c2c-plugin-porter repo as guidance and assess the Claude plugin fixture at:
-/Users/nigelstuke/Documents/repos/zew1me/c2c-plugin-porter/tests/fixtures/sample-claude-plugin
+/Users/nigelstuke/Documents/repos/zew1me/c2c-plugin-porter/plugins/c2c-plugin-porter/tests/fixtures/sample-claude-plugin
 
 Summarize:
 1. whether it is worth porting

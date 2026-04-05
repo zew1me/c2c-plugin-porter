@@ -10,8 +10,8 @@ Run the scanner before doing any manual rewrite work.
 ## Commands
 
 ```bash
-./scripts/run_porter.sh scan <source-plugin>
-./scripts/run_porter.sh plan <source-plugin>
+./plugins/c2c-plugin-porter/scripts/run_porter.sh scan <source-plugin>
+./plugins/c2c-plugin-porter/scripts/run_porter.sh plan <source-plugin>
 ```
 
 ## Heuristics
