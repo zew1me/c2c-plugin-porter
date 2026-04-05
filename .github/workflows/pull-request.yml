@@ -1,0 +1,64 @@
+name: pull-request
+
+on:
+  pull_request:
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: pre-commit-and-pre-push-checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Sync dev dependencies
+        run: uv sync --dev
+
+      - name: Run shared checks
+        run: ./scripts/check.sh
+
+  codex-smoke-eval:
+    name: codex-smoke-eval
+    if: ${{ secrets.OPENAI_API_KEY != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Sync dev dependencies
+        run: uv sync --dev
+
+      - name: Install Codex CLI
+        run: npm install -g @openai/codex@latest
+
+      - name: Run Codex smoke eval
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          C2C_EVAL_TIMEOUT_SECONDS: "45"
+        run: ./scripts/run_local_eval.sh
