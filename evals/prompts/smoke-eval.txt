@@ -1,0 +1,7 @@
+Use the local c2c-plugin-porter repo as guidance and assess the Claude plugin fixture at:
+/Users/nigelstuke/Documents/repos/zew1me/c2c-plugin-porter/tests/fixtures/sample-claude-plugin
+
+Summarize:
+1. whether it is worth porting
+2. which references need rewriting
+3. which components port directly vs need flattening

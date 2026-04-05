@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+./scripts/check.sh
+
+if [[ "${C2C_RUN_LOCAL_EVALS:-0}" == "1" ]]; then
+  ./scripts/run_local_eval.sh
+else
+  echo "Skipping local Codex evals. Set C2C_RUN_LOCAL_EVALS=1 to enable them on push."
+fi

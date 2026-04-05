@@ -1,0 +1,10 @@
+.pytest_cache/
+.ruff_cache/
+.ty/
+.venv/
+__pycache__/
+*.pyc
+dist/
+build/
+generated/
+evals/tmp/

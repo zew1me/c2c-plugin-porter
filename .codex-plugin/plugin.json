@@ -1,0 +1,39 @@
+{
+  "name": "c2c-plugin-porter",
+  "version": "0.1.0",
+  "description": "Codex plugin for porting Claude plugins into Codex plugins.",
+  "author": {
+    "name": "zew1me",
+    "url": "https://github.com/zew1me"
+  },
+  "homepage": "https://github.com/zew1me/c2c-plugin-porter",
+  "repository": "https://github.com/zew1me/c2c-plugin-porter",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "claude",
+    "plugins",
+    "migration"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "C2C Plugin Porter",
+    "shortDescription": "Turn Claude plugins into Codex plugins.",
+    "longDescription": "Assesses Claude plugin portability, resolves Claude-specific runtime references, and generates Codex plugin scaffolds with caveats.",
+    "developerName": "zew1me",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/zew1me/c2c-plugin-porter",
+    "privacyPolicyURL": "https://github.com/zew1me/c2c-plugin-porter",
+    "termsOfServiceURL": "https://github.com/zew1me/c2c-plugin-porter",
+    "defaultPrompt": [
+      "Assess this Claude plugin for Codex portability.",
+      "Convert this Claude plugin into a Codex plugin.",
+      "Explain which Claude references need rewriting."
+    ],
+    "brandColor": "#1F6FEB"
+  }
+}

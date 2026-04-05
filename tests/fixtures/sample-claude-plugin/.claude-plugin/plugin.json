@@ -1,0 +1,9 @@
+{
+  "name": "sample-review",
+  "version": "1.0.0",
+  "description": "Sample Claude plugin used for converter tests",
+  "author": {
+    "name": "Example Author"
+  },
+  "license": "MIT"
+}
