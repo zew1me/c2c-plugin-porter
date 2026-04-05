@@ -47,17 +47,32 @@ uv run ruff check .
 uv run ty check src tests
 ```
 
+The plugin ships a repo-relative launcher so Codex does not need to discover a globally installed `c2c-porter`
+binary. The launcher resolves the plugin root and runs the packaged CLI with `uv run --project <plugin-root>`.
+
 Scan a Claude plugin:
 
 ```bash
-uv run c2c-porter scan /path/to/source-plugin
+./scripts/run_porter.sh scan /path/to/source-plugin
 ```
 
 Convert a Claude plugin:
 
 ```bash
-uv run c2c-porter convert /path/to/source-plugin ./generated
+./scripts/run_porter.sh convert /path/to/source-plugin ./generated
 ```
+
+## Why this is plugin-shippable
+
+The Python package lives in `src/c2c_porter`, but it is shipped together with the plugin repo.
+The plugin skills call the shipped launcher in `scripts/run_porter.sh`, not a bare ambient command.
+That launcher always runs:
+
+```bash
+uv run --project <plugin-root> c2c-porter ...
+```
+
+So the package is resolved from the plugin itself, even if Codex invokes it from another working directory.
 
 ## Local Codex evals
 
